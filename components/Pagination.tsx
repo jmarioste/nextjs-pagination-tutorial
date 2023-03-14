@@ -13,10 +13,9 @@ type Props = {
 
 const Pagination = ({ page, itemCount, perPage }: Props) => {
   // use the usePagination hook
-  // currentPage - current page
   // getPageItem - function that returns the type of page based on the index.
   // size - the number of pages
-  const { currentPage, getPageItem, totalPages } = usePagination({
+  const { getPageItem, totalPages } = usePagination({
     totalItems: itemCount,
     page: page,
     itemsPerPage: perPage,
@@ -36,7 +35,7 @@ const Pagination = ({ page, itemCount, perPage }: Props) => {
       {[...arr].map((_, i) => {
         // getPageItem function returns the type of page based on the index.
         // it also automatically calculates if the page is disabled.
-        const { page, disabled } = getPageItem(i);
+        const { page, disabled, current } = getPageItem(i);
 
         if (page === "previous") {
           return (
@@ -59,7 +58,7 @@ const Pagination = ({ page, itemCount, perPage }: Props) => {
         }
 
         return (
-          <PaginationLink active={page === currentPage} key={page} page={page!}>
+          <PaginationLink active={current} key={page} page={page!}>
             {page}
           </PaginationLink>
         );
